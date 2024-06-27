@@ -37,7 +37,8 @@ export async function getDiffInPullRequest(
   });
   console.log("DESTINATION is ",destination);
   if (destination) {
-    execSync(`git remote add -f destination ${destination}`);
+    execSync(`git remote add destination ${destination}`);
+    execSync(`git fetch destination master devint /${headRef} /${baseRef}`);
     console.log("STEP 1 ...", {
     baseRef,
     headRef,
