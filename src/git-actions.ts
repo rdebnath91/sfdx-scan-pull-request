@@ -37,6 +37,7 @@ export async function getDiffInPullRequest(
     execSync(`git remote add -f destination ${destination}`);
     execSync(`git remote update`);
   }
+  console.log("Remote updated :::::::::::: ");
   /**
    * Keeping git diff output in memory throws `code: 'ENOBUFS'`  error when
    * called from within action. Writing to file, then reading avoids this error.
@@ -44,6 +45,7 @@ export async function getDiffInPullRequest(
   execSync(
     `git diff "destination/${baseRef}"..."origin/${headRef}" > ${DIFF_OUTPUT}`
   );
+  console.log("lots of differences :::::::::::::::::::");
   const files = parse(fs.readFileSync(DIFF_OUTPUT).toString());
   const filePathToChangedLines = new Map<string, Set<number>>();
   for (let file of files) {
