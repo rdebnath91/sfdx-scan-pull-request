@@ -33,9 +33,18 @@ export async function getDiffInPullRequest(
     baseRef,
     headRef,
   });
+  console.log("DESTINATION is ",destination);
   if (destination) {
     execSync(`git remote add -f destination ${destination}`);
+    console.log("STEP 1 ...", {
+    baseRef,
+    headRef,
+    });
     execSync(`git remote update`);
+	  console.log("STEP 2 ...", {
+    baseRef,
+    headRef,
+    });
   }
   console.log("Remote updated :::::::::::: ");
   /**
