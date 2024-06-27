@@ -43,7 +43,7 @@ export async function getDiffInPullRequest(
     baseRef,
     headRef,
     });
-    execSync(`git remote update`);
+    //execSync(`git remote update`);
 	  console.log("STEP 2 ...", {
     baseRef,
     headRef,
