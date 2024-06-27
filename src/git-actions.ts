@@ -29,6 +29,8 @@ export async function getDiffInPullRequest(
   headRef: string,
   destination?: string
 ) {
+  console.log("DESTINATION is ", {destination});
+  console.log("DESTINATION is ",destination);
   console.log("Getting difference within the pull request ...", {
     baseRef,
     headRef,
