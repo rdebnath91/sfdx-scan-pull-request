@@ -1,0 +1,35 @@
+name: build-dist
+
+on:
+  workflow_dispatch
+
+jobs:
+  build-dist:
+    runs-on: elisa-normal
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: setup node
+      uses: actions/setup-node@v4
+
+    - name: install typescript
+      shell: bash
+      run: npm install -D typescript
+
+    - name: build project
+      shell: bash
+      run: npm run build
+      
+    - name: push build
+      shell: bash
+      env:
+        USER: OFSalesforceAutomation
+        EMAIL: automation.salesforce@elisa.fi
+      run: |
+        git config --global user.name "$USER"
+        git config --global user.email "$EMAIL"
+        
+        git add dist
+        git commit -m "Add dist"
+        git push origin main
