@@ -30,34 +30,14 @@ export async function getDiffInPullRequest(
   destination?: string
 ) {
   console.log("DESTINATION is ", {destination});
-  console.log("DESTINATION is ",destination);
   console.log("Getting difference within the pull request ...", {
     baseRef,
     headRef,
   });
-  console.log("DESTINATION is ",destination);
   if (destination) {
-    execSync(`git remote add destination ${destination}`);
-    execSync(`git fetch --prune destination ${headRef} ${baseRef}`);
-    console.log("STEP 1 ...", {
-    baseRef,
-    headRef,
-    });
-    //execSync(`git remote update`);
-	  console.log("STEP 2 ...", {
-    baseRef,
-    headRef,
-    });
-  }
-  console.log("Remote updated :::::::::::: ");
-  /**
-   * Keeping git diff output in memory throws `code: 'ENOBUFS'`  error when
-   * called from within action. Writing to file, then reading avoids this error.
-   */
   execSync(
-    `git diff "destination/${baseRef}"..."destination/${headRef}" > ${DIFF_OUTPUT}`
+	  `curl --request GET --header 'authorization: Bearer ${{ inputs.github_token }}' --header 'content-type: application/json' --header 'Accept: application/vnd.github.v3.diff' --url https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} > ${DIFF_OUTPUT}`
   );
-  console.log("lots of differences :::::::::::::::::::");
   const files = parse(fs.readFileSync(DIFF_OUTPUT).toString());
   const filePathToChangedLines = new Map<string, Set<number>>();
   for (let file of files) {
