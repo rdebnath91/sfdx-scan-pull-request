@@ -36,7 +36,7 @@ export async function getDiffInPullRequest(
   });
   if (destination) {
   execSync(
-	  `curl --request GET --header 'authorization: Bearer ${{ inputs.github_token }}' --header 'content-type: application/json' --header 'Accept: application/vnd.github.v3.diff' --url https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} > ${DIFF_OUTPUT}`
+	  `curl --request GET --header 'authorization: Bearer ${{ env.GITHUB_TOKEN }}' --header 'content-type: application/json' --header 'Accept: application/vnd.github.v3.diff' --url https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} > ${DIFF_OUTPUT}`
   );
   const files = parse(fs.readFileSync(DIFF_OUTPUT).toString());
   const filePathToChangedLines = new Map<string, Set<number>>();
